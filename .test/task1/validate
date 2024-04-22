@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+export LC_ALL=C
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ROOT_DIR="$SCRIPT_DIR/../.."
+
+######################
+
+cd "$ROOT_DIR"
+
+######################
+
+echo "# Check greeter branch exists"
+
+git log -n 0 origin/greeter
+
+echo "# Check for merges in greeter"
+
+BRANCH_LOG=$(git log --merges -p --first-parent origin/greeter)
+if [[ $BRANCH_LOG ]]; then
+  echo "$BRANCH_LOG"
+else
+  echo "Failed: No merges found"
+  exit 1
+fi
+
+echo "# Check for merges of greeter into main"
+
+FIRST_MERGE_COMMIT=$(git log --format='%H' --ancestry-path main ^origin/greeter | tail -n 1)
+MAIN_LOG=$(git log -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
+if [[ $MAIN_LOG ]]; then
+  echo "$MAIN_LOG"
+else
+  echo "Failed: No merges found"
+  exit 1
+fi
+
+echo "# Verify that program works correctly after conflict resolution"
+
+read -r -d '\0' EXPECTED<<EOF
+Good morning and ...
+Hello world!
+... and good bye!
+\0
+EOF
+gcc src/hello.c -o src/a.out
+diff -U 1000 <(echo "$EXPECTED") <(./src/a.out)

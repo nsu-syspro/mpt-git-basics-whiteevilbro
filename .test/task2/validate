@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -e
+
+export LC_ALL=C
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ROOT_DIR="$SCRIPT_DIR/../.."
+
+######################
+
+cd "$ROOT_DIR"
+
+######################
+
+echo "# Check sorting branch exists"
+
+git log -n 0 origin/sorting
+
+echo "# Check for merges in sorting"
+
+BRANCH_LOG=$(git log --merges -p --first-parent origin/sorting)
+if [[ $BRANCH_LOG ]]; then
+  echo "$BRANCH_LOG"
+else
+  echo "Failed: No merges found"
+  exit 1
+fi
+
+echo "# Check for merges of sorting into main"
+
+FIRST_MERGE_COMMIT=$(git log --format='%H' --ancestry-path main ^origin/sorting | tail -n 1)
+MAIN_LOG=$(git log -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
+if [[ $MAIN_LOG ]]; then
+  echo "$MAIN_LOG"
+else
+  echo "Failed: No merges found"
+  exit 1
+fi
+
+echo "# Verify that program works correctly after conflict resolution"
+
+read -r -d '\0' EXPECTED<<EOF
+comparing 40 and 4
+comparing 40 and 20
+comparing 4 and 20
+comparing 40 and 10
+comparing 20 and 10
+comparing 4 and 10
+comparing 40 and 30
+comparing 20 and 30
+comparing 40 and 6
+comparing 30 and 6
+comparing 20 and 6
+comparing 10 and 6
+comparing 4 and 6
+comparing 40 and 10
+comparing 30 and 10
+comparing 20 and 10
+comparing 10 and 10
+[4, 6, 10, 10, 20, 30, 40]
+\0
+EOF
+diff -U 1000 <(echo "$EXPECTED") <(python3 src/sort.py)
