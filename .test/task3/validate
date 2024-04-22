@@ -24,6 +24,9 @@ if [[ $BRANCH_LOG ]]; then
   echo "$BRANCH_LOG"
   echo "Failed: Unexpected merge"
   exit 1
+else
+  BASE_COMMIT=$(git merge-base origin/sorting-rebased origin/sorting)
+  git log -p "$BASE_COMMIT"..origin/sorting-rebased
 fi
 
 echo "# Check for merges of sorting-rebased into main"
