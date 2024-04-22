@@ -15,11 +15,11 @@ cd "$ROOT_DIR"
 
 echo "# Check greeter branch exists"
 
-git log -n 0 origin/greeter
+git log --color=always -n 0 origin/greeter
 
 echo "# Check for merges in greeter"
 
-BRANCH_LOG=$(git log --merges -p --first-parent origin/greeter)
+BRANCH_LOG=$(git log --color=always --merges -p --first-parent origin/greeter)
 if [[ $BRANCH_LOG ]]; then
   echo "$BRANCH_LOG"
 else
@@ -29,8 +29,8 @@ fi
 
 echo "# Check for merges of greeter into main"
 
-FIRST_MERGE_COMMIT=$(git log --format='%H' --ancestry-path main ^origin/greeter | tail -n 1)
-MAIN_LOG=$(git log -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
+FIRST_MERGE_COMMIT=$(git log --color=always --format='%H' --ancestry-path main ^origin/greeter | tail -n 1)
+MAIN_LOG=$(git log --color=always -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
 if [[ $MAIN_LOG ]]; then
   echo "$MAIN_LOG"
 else
@@ -47,4 +47,4 @@ Hello world!
 \0
 EOF
 gcc src/hello.c -o src/a.out
-diff -U 1000 <(echo "$EXPECTED") <(./src/a.out)
+diff --color=always -U 1000 <(echo "$EXPECTED") <(./src/a.out)

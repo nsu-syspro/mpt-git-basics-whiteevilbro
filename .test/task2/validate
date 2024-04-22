@@ -15,11 +15,11 @@ cd "$ROOT_DIR"
 
 echo "# Check sorting branch exists"
 
-git log -n 0 origin/sorting
+git log --color=always -n 0 origin/sorting
 
 echo "# Check for merges in sorting"
 
-BRANCH_LOG=$(git log --merges -p --first-parent origin/sorting)
+BRANCH_LOG=$(git log --color=always --merges -p --first-parent origin/sorting)
 if [[ $BRANCH_LOG ]]; then
   echo "$BRANCH_LOG"
 else
@@ -29,8 +29,8 @@ fi
 
 echo "# Check for merges of sorting into main"
 
-FIRST_MERGE_COMMIT=$(git log --format='%H' --ancestry-path main ^origin/sorting | tail -n 1)
-MAIN_LOG=$(git log -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
+FIRST_MERGE_COMMIT=$(git log --color=always --format='%H' --ancestry-path main ^origin/sorting | tail -n 1)
+MAIN_LOG=$(git log --color=always -p --first-parent -n 1 "$FIRST_MERGE_COMMIT")
 if [[ $MAIN_LOG ]]; then
   echo "$MAIN_LOG"
 else
@@ -61,4 +61,4 @@ comparing 10 and 10
 [4, 6, 10, 10, 20, 30, 40]
 \0
 EOF
-diff -U 1000 <(echo "$EXPECTED") <(python3 src/sort.py)
+diff --color=always -U 1000 <(echo "$EXPECTED") <(python3 src/sort.py)
