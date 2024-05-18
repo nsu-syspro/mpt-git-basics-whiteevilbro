@@ -24,6 +24,13 @@ jobs:
       with:
         fetch-depth: 0 # Required to see all branches
 
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+      with:
+        scandir: './.test'
+      env:
+        SHELLCHECK_OPTS: -e SC2028
+
     - name: 'Task #1'
       id: task-1
       uses: classroom-resources/autograding-command-grader@v1
