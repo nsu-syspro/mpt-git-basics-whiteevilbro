@@ -34,7 +34,7 @@
     * [new branch]      main             -> upstream/main
     * [new branch]      sorting          -> upstream/sorting
    ```
-   После этого можно убедиться, что все `upstream` ветки теперь видны в локальномрепозитории:
+   После этого можно убедиться, что все `upstream` ветки теперь видны в локальном репозитории:
    ```console
    $ git branch --remotes
      origin/HEAD -> origin/main
