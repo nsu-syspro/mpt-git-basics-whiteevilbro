@@ -11,8 +11,28 @@
 Репозиторий данного задания в GitHub Classroom является [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)'ом (копией)
 некоторого *upstream* репозитория [nsu-syspro/mpt-git-basics](https://github.com/nsu-syspro/mpt-git-basics).
 
-По умолчанию *fork* копирует только основную ветку [main](https://github.com/nsu-syspro/mpt-git-basics/tree/main).
-Однако, для выполнения следующих заданий потребуется синхронизовать все ветки из *upstream* репозитория в текущий.
+Помимо основной ветки [main](../../tree/main) в данном репозитории должны присутствовать и другие ветки,
+образующие следующую иерархию:
+
+```console
+$ git log --oneline --graph --glob='*greeter' --glob='*sorting'
+* f96816b (origin/sorting) Make sorting more verbose
+| * e7a8f53 (origin/faster-sorting) Use better sorting algorithm
+|/
+* 69079b4 Implement base sorting
+| * eb3bde4 (origin/exit-greeter) Add some greetings in the end
+| | * 79725ea (origin/entrance-greeter) Add some greetings in the beginning
+| |/
+| * f96bdde (origin/greeter) Hello world in C
+|/
+* a6172c7 Initial commit
+```
+
+> [!IMPORTANT]
+> Проверьте, что иерархия интересующих нас веток в данном репозитории соответствует ожидаемой, выполнив приведенную выше команду.
+> 
+> Если же иерархия веток отличается или их нет, обратитесь за помощью к преподавателю или попробуйте синхронизовать
+> все ветки из *upstream* репозитория самостоятельно с помощью инструкций ниже.
 
 <details>
   <summary>Подробные инструкции</summary>
