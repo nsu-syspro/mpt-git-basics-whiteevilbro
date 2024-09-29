@@ -9,7 +9,7 @@
 ## Подготовка
 
 Репозиторий данного задания в GitHub Classroom является [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)'ом (копией)
-некоторого *upstream* репозитория [nsu-syspro/mpt-git-basics](https://github.com/nsu-syspro/mpt-git-basics).
+некоторого *upstream* репозитория [nsu-syspro/mpt-git-basics-2024](https://github.com/nsu-syspro/mpt-git-basics-2024).
 
 Помимо основной ветки [main](../../tree/main) в данном репозитории должны присутствовать и другие ветки,
 образующие следующую иерархию:
@@ -39,7 +39,7 @@ $ git log --oneline --graph --glob='*greeter' --glob='*sorting'
 
 1. Добавить `upstream` репозиторий, как *remote* и сделать `fetch`:
    ```console
-   $ git remote add upstream git@github.com:nsu-syspro/mpt-git-basics.git
+   $ git remote add upstream git@github.com:nsu-syspro/mpt-git-basics-2024.git
    $ git fetch upstream
    remote: Enumerating objects: 26, done.
    remote: Counting objects: 100% (26/26), done.
