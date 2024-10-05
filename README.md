@@ -401,6 +401,36 @@ gitGraph:
    To github.com:nsu-syspro/mpt-git-basics-<your-github-username>.git
       5262815..8c69217  main -> main
    ```
+   > Если проверки на GitHub не прошли (например, потому что конфликты неправильно разрешили),
+   > то рекомендуется провести процесс слияния и разрешения конфликтов заново.
+   > Для этого нужно установить ветки `main` и `sorting` в исходное положение до слияния и публикации:
+   > ```console
+   > $ git switch main
+   > Already on 'main'
+   > Your branch is up to date with 'origin/main'.
+   > $ git reset --hard HEAD~1
+   > HEAD is now at 23bff0f Merge branch 'greeter'
+   > $ git push --force-with-lease
+   > Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+   > To github.com:nsu-syspro/mpt-git-basics-<your-github-username>.git
+   >  + bdacfe8...23bff0f main -> main (forced update)
+   > $ git switch sorting
+   > Switched to branch 'sorting'
+   > Your branch is up to date with 'origin/sorting'.
+   > $ git reset --hard HEAD~1
+   > HEAD is now at e7a8f53 Use better sorting algorithm
+   > $ git push --force-with-lease
+   > Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+   > To github.com:nsu-syspro/mpt-git-basics-<your-github-username>.git
+   >  + 40766ce...e7a8f53 sorting-rebased -> sorting-rebased (forced update)
+   > ```
+   > И затем повторить слияние веток.
+   >
+   > **Осторожно**  
+   > Опция `--force-with-lease` *форсирует* переписывание истории на публичном
+   > сервере, что является *чрезвычайно опасным* действием, особенно, если
+   > с репозиторием работают другие люди кроме вас, которые могли базироваться
+   > на ветке, историю которой вы изменяете.
 
 </details>
 
@@ -686,6 +716,30 @@ gitGraph:
    To github.com:liontiger23/mpt-git-basics-test.git
       8c69217..55b856c  main -> main
    ```
+   > Если проверки на GitHub не прошли (например, потому что конфликты неправильно разрешили),
+   > то рекомендуется провести процесс перебазирования и разрешения конфликтов заново.
+   > Для этого нужно установить ветки `main` и `sorting-rebased` в исходное положение до перебазирования и публикации:
+   > ```console
+   > $ git switch main
+   > Already on 'main'
+   > Your branch is up to date with 'origin/main'.
+   > $ git reset --hard HEAD~1
+   > HEAD is now at 5c975f3 Merge branch 'sorting'
+   > $ git push --force-with-lease
+   > Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+   > To github.com:nsu-syspro/mpt-git-basics-<your-github-username>.git
+   >  + bdacfe8...5c975f3 main -> main (forced update)
+   > $ git switch sorting-rebased
+   > Switched to branch 'sorting-rebased'
+   > Your branch is up to date with 'origin/sorting-rebased'.
+   > $ git reset --hard origin/faster-sorting
+   > HEAD is now at 69079b4 Implement base sorting
+   > $ git push --force-with-lease
+   > Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+   > To github.com:nsu-syspro/mpt-git-basics-<your-github-username>.git
+   >  + 40766ce...69079b4 sorting -> sorting (forced update)
+   > ```
+   > И затем повторить перебазирование.
 
 </details>
 
